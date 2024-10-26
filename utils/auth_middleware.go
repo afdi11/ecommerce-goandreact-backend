@@ -7,6 +7,8 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 func AuthMiddleware() gin.HandlerFunc {
@@ -32,4 +34,10 @@ func AuthMiddleware() gin.HandlerFunc {
 
 		c.Next()
 	}
+}
+
+// MockDB initializes and returns a mock database connection
+func MockDB() *gorm.DB {
+	db, _ := gorm.Open(sqlite.Open(":memory:"), &gorm.Config{})
+	return db
 }
